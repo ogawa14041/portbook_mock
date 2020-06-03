@@ -1,0 +1,8 @@
+ a{
+    margin: auto;
+    background-color: rgb(255, 0, 64);
+    scrollbar-arrow-color: coral;
+}
+h2 {
+    float:right;
+}
