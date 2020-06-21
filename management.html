@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <title>Document</title>
-
 </head>
 <body>
   <div class="" style="background-color: #eeeeee">
-    
     <div class="row">
       <!--サイドメニュー-->
       <div class="col-sm-2" style="background-color:#4d4d4d;">
@@ -86,124 +85,122 @@
             </div>
       <!--/メインコンテンツ-->
       </div>
+      <!-- todo:画像を表示 -->
+      <div id= "thumbnail"></div>
+      <!-- /todo:画像を表示 -->
   </div>
   <script>
     //AjaxでopenBDの利用
-          $(function() {
-      $('#getBookInfo').click(function (e) {
-        e.preventDefault();
-        const isbn = $("#isbn").val();
-        const url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
-        $.getJSON(url, function (data) {
-          if (data[0] == null) {
-            toastr.warning("データが見つかりません");
+  $(function() {
+    $('#getBookInfo').click(function (e) {
+      e.preventDefault();
+      const isbn = $("#isbn").val();
+      const url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
+      $.getJSON(url, function (data) {
+        if (data[0] == null) {
+          toastr.warning("データが見つかりません");
+        } else {
+          // isbnが存在しているとき、実行される
+          const formattedData = formattingData(data);
+          if (data[0].summary.cover == "") {
+            // 画像が存在しない場合
+            $("#thumbnail").html('<img src=\"\" style="display:none;">');
           } else {
-            const formattedData = formattingData(data);
-            if (data[0].summary.cover == "") {
-              $("#thumbnail").html('<img src=\"\" style="display:none;">');
-            } else {
-              $("#thumbnail").html('<img class=\"thumbnailImg\" src=\"' + formattedData['image_url'] + '\">');
-              $("#thumbnail").addClass('thumbnailImg');
-            }
-            //各idのvalueに値を代入
-            $("#title").val(formattedData['title']);
-            $("#publisher").val(formattedData['publisher']);
-            $("#author").val(formattedData['author']);
-            $("#image-url").val(formattedData['image_url']);
-            $("#description").val(formattedData['description']);
+            // 画像が存在したとき
+            $("#thumbnail").html('<img class=\"thumbnailImg\" src=\"' + formattedData['image_url'] + '\">');
+            $("#thumbnail").addClass('thumbnailImg');
           }
-        });
+          //各idのvalueに値を代入
+          $("#title").val(formattedData['title']);
+          $("#publisher").val(formattedData['publisher']);
+          $("#author").val(formattedData['author']);
+          $("#image-url").val(formattedData['image_url']);
+          $("#description").val(formattedData['description']);
+        }
       });
-          });
-  
-          // apiで取得したデータの整形
-          function formattingData (data) {
-                  let title = '';
-                  let author = '';
-                  let publisher = '';
-                  let image_url = '';
-                  let descriptionCnt = 0;
-                  let description1 = '';
-                  let description2 = '';
-                  let description = '';
-                  let bookData = {};
-  
-                  // タイトルのフォーマット
-                  if (isDefined(data[0], 'onix.DescriptiveDetail.Collection.TitleDetail.TitleElement.0.TitleText.content')) {
+    });
+  });
+  // apiで取得したデータの整形
+  function formattingData (data) {
+    let title = '';
+    let author = '';
+    let publisher = '';
+    let image_url = '';
+    let descriptionCnt = 0;
+    let description1 = '';
+    let description2 = '';
+    let description = '';
+    let bookData = {};
+    // タイトルのフォーマット
+    if (isDefined(data[0], 'onix.DescriptiveDetail.Collection.TitleDetail.TitleElement.0.TitleText.content')) {
       title += data[0].onix.DescriptiveDetail.Collection.TitleDetail.TitleElement[0].TitleText.content;
-                  }
-                  if (isDefined(data[0], 'summary.title')) {
+    }
+    if (isDefined(data[0], 'summary.title')) {
       title += title.length > 0 ? '　' + data[0].summary.title : data[0].summary.title;
-                  }
-  
-                  // 著者のフォーマット
-                  if (isDefined(data[0], 'onix.DescriptiveDetail.Contributor.0.PersonName.content')) {
+    }
+
+    // 著者のフォーマット
+    if (isDefined(data[0], 'onix.DescriptiveDetail.Contributor.0.PersonName.content')) {
       author = data[0].onix.DescriptiveDetail.Contributor[0].PersonName.content;
-                  } else {
+    } else {
       authors = data[0].summary.author.split('／著');
-                      author = authors[0];
-                  }
-  
-                  // 出版社のフォーマット
-                  if (isDefined(data[0], 'summary.publisher')) {
+      author = authors[0];
+    }
+
+    // 出版社のフォーマット
+    if (isDefined(data[0], 'summary.publisher')) {
       publisher = data[0].summary.publisher;
-                  }
-                  // 画像のURLのフォーマット
-                  if (isDefined(data[0], 'summary.cover')) {
+    }
+    // 画像のURLのフォーマット
+    if (isDefined(data[0], 'summary.cover')) {
       image_url = data[0].summary.cover;
-      
-                  }
-  
-                  // 書籍の説明のフォーマット
-                  if (isDefined(data[0], 'onix.CollateralDetail.TextContent.0.Text')) {
+    }
+
+    // 書籍の説明のフォーマット
+    if (isDefined(data[0], 'onix.CollateralDetail.TextContent.0.Text')) {
       description1 = data[0].onix.CollateralDetail.TextContent[0].Text;
-                      descriptionCnt = data[0].onix.CollateralDetail.TextContent.length;
-                  } else {
+      descriptionCnt = data[0].onix.CollateralDetail.TextContent.length;
+    } else {
       description1 = '';
-                  }
-  
-                  if (descriptionCnt >= 2 && data[0].onix.CollateralDetail.TextContent[0].Text.length <= 200) {
+    }
+    if (descriptionCnt >= 2 && data[0].onix.CollateralDetail.TextContent[0].Text.length <= 200) {
       description2 = data[0].onix.CollateralDetail.TextContent[1].Text;
-                  } else {
+    } else {
       description2 = '';
-                  }
-                  description = description1 + '\n' + description2;
-  
-                  bookData['title'] = title;
-                  bookData['author'] = author;
-                  bookData['image_url'] = image_url;
-                  bookData['publisher'] = publisher;
-                  bookData['description'] = description;
-  
-                  return bookData;
-              }
-  
-              // apiで取得したデータの存在チェック
-              function isDefined (obj, path) {
-                  const keys = path.split('.');
-                  for (let k in keys) {
-                      const key = keys[k];
-  
-                      if (!obj.hasOwnProperty(key)) { return false; }
-  
-                      if (keys.length > 1) {
-                          return isDefined(obj[key], keys.splice(1).join('.'));
-                      }
-                      return true;
-                  }
-              };
-  
-          //テキスト内でのエンターを押した際にsubmitするのを防止
-          $(function(){
+    }
+      description = description1 + '\n' + description2;
+
+      bookData['title'] = title;
+      bookData['author'] = author;
+      bookData['image_url'] = image_url;
+      bookData['publisher'] = publisher;
+      bookData['description'] = description;
+      return bookData;
+    }
+    // apiで取得したデータの存在チェック
+    function isDefined (obj, path) {
+        const keys = path.split('.');
+        for (let k in keys) {
+            const key = keys[k];
+
+            if (!obj.hasOwnProperty(key)) { return false; }
+
+            if (keys.length > 1) {
+                return isDefined(obj[key], keys.splice(1).join('.'));
+            }
+            return true;
+        }
+    };
+    //テキスト内でのエンターを押した際にsubmitするのを防止
+    $(function(){
       $("input").on("keydown", function (e) {
         if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
           return false;
         } else {
           return true;
-        }
-      });
-          });
-
+      }
+    });
+  });
   </script>
 </body>
 </html> 
