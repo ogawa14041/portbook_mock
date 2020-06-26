@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <title>Document</title>
+  <title>本貸出システム</title>
 </head>
 <body>
   <div class="container-fluid" style="background-color: #eeeeee">
@@ -25,8 +25,8 @@
       <!--/サイドメニュー-->
       <!--メインコンテンツ-->
       <div class="col-sm-10">
-        <div class="text-center strong" style="margin-top: 80px; margin-bottom: 58px;" id="warning">＜入力項目＞</div>
-          <div id="hide" class="col-sm-8 text-center"style="color:#eeeeee;float-left:150px"></div>
+        <div class="text-center" style="margin-top: 80px; margin-bottom: 58px;">＜入力項目＞</div>
+          <div id="hide" class="col-sm-8 text-center"></div>
             <form class="text-center">
               <div class="form-group row">
                 <label for="isbn" class="col-sm-3 col-form-label">ISBN</label>
@@ -69,7 +69,7 @@
               <div class="form-group row">
                 <label for="image-url" class="col-sm-3 col-form-label">画像URL</label>
                   <div class="col-sm-6" style="margin-bottom: 20px;">
-                    <input type="text" class="form-control" id="image-url" placeholder="https://search.yahoo.co.jp/image/search?ei=UTF-8&p=%E6%96%87%E9%83%A8%E7%A7%91%E5%AD%A6%E7%9C%81&fr=mcafeess1" value="">
+                    <input type="text" class="form-control" id="image-url" placeholder="https://cover.openbd.jp/9784594079437.jpg" value="">
                     <!-- 画像を表示 -->
                     <div class="mx-auo">
                       <img id="thumbnail-image" src="no_image.jpg" style="width:200px;height:300px;margin-top: 30px;" >
@@ -92,7 +92,7 @@
       </div>
     </div>
   <script>
-    //AjaxでopenBDの利用
+  //AjaxでopenBDの利用
   $(function() {
     $('#getBookInfo').click(function (e) {
       e.preventDefault();
@@ -102,7 +102,7 @@
         if (data[0] == null) {
           $("#hide").text("データが見つかりません");
           $("#hide").css("color","red");
-          // Todo:各idのvalueに値を空
+          // 各idのvalueに値を空
           $("#title").val('');
           $("#publisher").val('');
           $("#author").val('');
@@ -119,8 +119,6 @@
           } else {
             // 画像が存在したとき
             $("#thumbnail-image").attr('src',formattedData['image_url']);
-          
-            
           }
           //各idのvalueに値を代入
           $("#title").val(formattedData['title']);
@@ -150,7 +148,6 @@
     if (isDefined(data[0], 'summary.title')) {
       title += title.length > 0 ? '　' + data[0].summary.title : data[0].summary.title;
     }
-
     // 著者のフォーマット
     if (isDefined(data[0], 'onix.DescriptiveDetail.Contributor.0.PersonName.content')) {
       author = data[0].onix.DescriptiveDetail.Contributor[0].PersonName.content;
@@ -158,7 +155,6 @@
       authors = data[0].summary.author;
       author = authors[0];
     }
-
     // 出版社のフォーマット
     if (isDefined(data[0], 'summary.publisher')) {
       publisher = data[0].summary.publisher;
@@ -167,21 +163,21 @@
     if (isDefined(data[0], 'summary.cover')) {
       image_url = data[0].summary.cover;
     }
-
     // 書籍の説明のフォーマット
     if (isDefined(data[0], 'onix.CollateralDetail.TextContent.0.Text')) {
       description1 = data[0].onix.CollateralDetail.TextContent[0].Text;
       descriptionCnt = data[0].onix.CollateralDetail.TextContent.length;
     } else {
       description1 = '';
+      console.log(description1);
     }
     if (descriptionCnt >= 2 && data[0].onix.CollateralDetail.TextContent[0].Text.length <= 200) {
       description2 = data[0].onix.CollateralDetail.TextContent[1].Text;
+      
     } else {
       description2 = '';
     }
       description = description1 + '\n' + description2;
-
       bookData['title'] = title;
       bookData['author'] = author;
       bookData['image_url'] = image_url;
@@ -194,9 +190,7 @@
         var keys = path.split('.');
         for (let k in keys) {
             var key = keys[k];
-
             if (!obj.hasOwnProperty(key)) { return false; }
-
             if (keys.length > 1) {
                 return isDefined(obj[key], keys.splice(1).join('.'));
             }
