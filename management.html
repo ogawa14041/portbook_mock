@@ -7,49 +7,50 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>本貸出システム</title>
 </head>
+<link rel="stylesheet" href="./style.css">
 <body>
-  <div class="container-fluid" style="background-color: #eeeeee">
+  <div class="container-fluid">
     <div class="row">
       <!--サイドメニュー-->
-      <div class="col-sm-2" style="background-color:#4d4d4d;">
-        <div class="position-fixed" style="margin-left: 25px;">
-            <a href="#" class="text-center" style="margin-bottom:30px; margin-top: 70px; display:block; color:white; font-size: 30px; width: 100%;">All</a>
+      <div class="col-sm-2 bg-secondary">
+        <div class="position-fixed">
+            <a href="#" class="text-center my-5 d-inline-block w-100 display-4 text-white">All</a>
             <br>
-            <a href="#" class="text-center" style="margin-bottom:30px; display:block; color:white; font-size: 30px; width: 100%;">Borrow</a>
+            <a href="#" class="text-center mb-5 d-inline-block w-100 display-4 text-white">Borrow</a>
             <br>
-            <a href="#" class="text-center" style="margin-bottom:30px; display:block; color:white; font-size: 30px; width: 100%;">Over</a>
+            <a href="#" class="text-center mb-5 d-inline-block w-100 display-4 text-white">Over</a>
             <br>
-            <a href="http://127.0.0.1:5500/index.html"><button class="btn-outline-info" style="margin-top:150px;  font-size: 30px; width: auto;">RETURN</button></a>
+            <a href="http://127.0.0.1:5500/index.html"><button class="btn-outline-info mt-5 d-inline-block w-100 h-1 text-dark mt-5">CREATE</button></a>
         </div>
       </div>
       <!--/サイドメニュー-->
       <!--メインコンテンツ-->
       <div class="col-sm-10">
-        <div class="text-center" style="margin-top: 80px; margin-bottom: 58px;">＜入力項目＞</div>
-          <div id="hide" class="col-sm-8 text-center"></div>
+        <div class="text-center mt-5">＜入力項目＞</div>
+          <div id="hide" class="col-sm-8 text-center mt-5"></div>
             <form class="text-center">
-              <div class="form-group row">
+              <div class="form-group row mb-5">
                 <label for="isbn" class="col-sm-3 col-form-label">ISBN</label>
-                <div class="input-group col-sm-6" style="margin-bottom: 30px;">
+                <div class="input-group col-sm-6">
                   <input type="text" class="form-control" id="isbn" placeholder="12345678910">
                   <button class="btn btn-default btn-primary" type="submit" id="getBookInfo">Search</button>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="title" class="col-sm-3 col-form-label">タイトル</label>
-                  <div class="col-sm-6" style="margin-bottom: 30px;">
+                  <div class="col-sm-6">
                     <input type="text" class="form-control" id="title" placeholder="本の借り方" value="">
                   </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="author" class="col-sm-3 col-form-label">著者</label>
-                  <div class="col-sm-6" style="margin-bottom: 30px;">
+                  <div class="col-sm-6">
                     <input type="text" class="form-control" id="author"placeholder="本借男" value="">
                   </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="genre" class="col-sm-3 col-form-label">ジャンル</label>
-                  <div class="col-sm-6" style="margin-bottom: 30px;">
+                  <div class="col-sm-6">
                       <select type="text" class="form-control" id="genre" placeholder="文芸,実用,ビジネス・経済・経営,児童書・学参,専門書,その他" value="">
                       <option value="1">文芸</option>
                       <option value="2" selected="selected">実用</option>
@@ -60,31 +61,31 @@
                   </select>
                   </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="publisher" class="col-sm-3 col-form-label">出版社</label>
-                  <div class="col-sm-6" style="margin-bottom: 30px;">
+                  <div class="col-sm-6">
                     <input type="text" class="form-control" id="publisher" placeholder="集英社" value="">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="image-url" class="col-sm-3 col-form-label">画像URL</label>
-                  <div class="col-sm-6" style="margin-bottom: 20px;">
+                  <div class="col-sm-6">
                     <input type="text" class="form-control" id="image-url" placeholder="https://cover.openbd.jp/9784594079437.jpg" value="">
                     <!-- 画像を表示 -->
-                    <div class="mx-auo">
-                      <img id="thumbnail-image" src="no_image.jpg" style="width:200px;height:300px;margin-top: 30px;" >
+                    <div class="mx-auo mt-5">
+                      <img id="thumbnail-image" src="no_image.jpg" class="my-5" style="width: 260px;height: 310px;">
                     </div>  
                     <!-- 画像を表示 -->
                   </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row my-5">
                 <label for="description" class="col-sm-3 col-form-label">書籍の説明</label>
-                  <div class="col-sm-6" style="margin-bottom: 30px;">
+                  <div class="col-sm-6">
                     <textarea class="form-control" id="description" rows="4" value=""></textarea>
                   </div>
               </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary " style="margin-bottom: 1000px;">書籍を追加</button>
+              <div class="text-center my-5">
+                <button type="submit" class="btn btn-primary">書籍を追加</button>
               </div>
             </form>
         <!--/メインコンテンツ-->

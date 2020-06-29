@@ -7,51 +7,28 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>本貸出システム</title>
 </head>
-<style>
-/* モーダル コンテンツエリア */
-#modal-main {
-  display: none;
-  width: 500px;
-  height: 300px;
-  border-radius: 30px;
-  background-color: #eeeeee ;
-  color: #666666;
-  position:fixed;
-  z-index: 2;
-}
-/* モーダル 背景エリア */
-#modal-bg {
-  display:none;
-  width:100%;
-  height:100%;
-  background-color: rgba(0,0,0,0.5);
-  position:fixed;
-  top:0;
-  left:0;
-  z-index: 1;
-}
-</style>
+<link rel="stylesheet" href="./style.css">
 <body>
-  <div class="container-fluid" style="background-color: #eeeeee">
+  <div class="container-fluid">
     <div class="row ">
       <!--サイドメニュー-->
-      <div class="col-sm-2" style="background-color:#4d4d4d;">
-        <div class="position-fixed" style="margin-left: 30px">
-            <a href="#" class="text-center" style="margin-bottom:30px; margin-top: 70px; display:block; color:white; font-size: 30px; width: auto;">All</a>
+      <div class="col-sm-2 bg-secondary">
+        <div class="position-fixed">
+            <a href="#" class="text-center my-5 d-inline-block w-100 display-4 text-white">All</a>
             <br>
-            <a href="#" class="text-center" style="margin-bottom:30px; display:block; color:white; font-size: 30px; width: 100%;">Borrow</a>
+            <a href="#" class="text-center mb-5 d-inline-block w-100 display-4 text-white">Borrow</a>
             <br>
-            <a href="#" class="text-center" style="margin-bottom:30px; display:block; color:white; font-size: 30px; width: 100%;">Over</a>
+            <a href="#" class="text-center mb-5 d-inline-block w-100 display-4 text-white">Over</a>
             <br>
-            <a href="http://127.0.0.1:5500/management.html"><button class="btn-outline-info" style="margin-top:150px; display:block; font-size: 30px; width: auto;">CREATE</button></a>
+            <a href="http://127.0.0.1:5500/management.html"><button class="btn-outline-info mt-5 d-inline-block w-100 h-1 text-dark mt-5">CREATE</button></a>
         </div>
       </div>
       <!--/サイドメニュー-->
       <!--メインコンテンツ-->
       <div class="col-sm-10">
         <!--検索バー-->
-        <div class="col-sm-8 mx-auto">
-          <div class="input-group" style="margin-top: 20px; ">
+        <div class="col-sm-10 mx-auto">
+          <div class="input-group mt-5">
             <input type="text" class="form-control">
             <button class="btn btn-default btn-primary" type="submit">Search</button>
           </div>
@@ -59,8 +36,8 @@
         <!--/検索バー-->
         <!--送りページ-->
         <nav aria-label="...">
-          <div class="mx-auto" style="width: 200px; padding-top: 20px;">
-            <ul class="pagination">
+          <div>
+            <ul class="pagination justify-content-center my-5">
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="前">
                   <span aria-hidden="true">&laquo;</span>
@@ -81,110 +58,101 @@
         </nav>
         <!--/送りページ-->
         <div class="row">
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-danger text-dark" style="width: 240px; margin-bottom: 15Px;">return</button>
+            <button type="button" class="return btn btn-danger text-dark mb-5 w-50">return</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button id="modal-open" type="button" class="btn btn-primary  text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
-            <!--modal表示-->
-            <div id="modal-main">
-              <p style="margin-top: 100px;">貸出を行いますが、よろしいでしょうか</p>
-              <p>書籍：タイトル</p>
-              <p>貸出者：杉山 大知</p>
-              <button id="YES"style="border-radius:10px; margin-right: 100px; font-size: 20px;">YES</button>
-              <button id="NO"style="border-radius:10px; font-size: 20px;">NO</button>
-            </div>
-            <!--/modal表示-->
+            <button type="button" class="rental btn btn-primary  text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image bt-5">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-danger text-dark" style="width: 240px; margin-bottom: 15Px">return</button>
+            <button type="button" class="return btn btn-danger text-dark mb-5 w-50">return</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
-          <div class="text-center" style="width: 50%;">
-            <img src="no_image.jpg" style="width: 240px; height: 310px;">
+          <div class="text-center w-50">
+            <img src="no_image.jpg" class="index-image">
             <br>
-            <button type="button" class="btn btn-primary text-dark" style="width: 240px; margin-bottom: 15Px">rental</button>
+            <button type="button" class="rental btn btn-primary text-dark mb-5 w-50">rental</button>
           </div>
         </div>
         <!--送りページ下に書く-->
         <nav aria-label="...">
-          <div class="mx-auto" style="width: 200px;">
-            <ul class="pagination">
+          <div>
+            <ul class="pagination pagination justify-content-center mt-5">
               <li class="page-item">
               <a class="page-link" href="#" aria-label="前">
                 <span aria-hidden="true">&laquo;</span>
@@ -207,33 +175,82 @@
       <!--/メインコンテンツ-->
     </div>
   </div>
+  <!--rental-modal表示-->
+  <div id="rental-modal-main"class="text-center ">
+    <p>貸出を行いますが、よろしいでしょうか</p>
+    <p>書籍：タイトル</p>
+    <p>貸出者：杉山 大知</p>
+    <button id="YES"type="button" class="btn btn-primary rounded-pill">YES</button>
+    <button id="NO"type="button" class="btn btn-danger rounded-pill">NO</button>
+  </div>
+  <!--/rental-modal表示-->
+  <!--return-modal表示-->
+  <div id="return-modal-main"class="text-center">
+    <p>返却を行いますが、よろしいでしょうか</p>
+    <p>書籍：タイトル</p>
+    <p>貸出者：杉山 大知</p>
+    <button id="YES"type="button" class="btn btn-primary rounded-pill">YES</button>
+    <button id="NO"type="button" class="btn btn-danger rounded-pill">NO</button>
+  </div>
+  <!--/return-modal表示-->
 <script>
    //modal
 $(function(){
- //テキストリンクをクリックしたら
-    $("#modal-open").click(function(){
+ //rentalボタンをクリックしたら
+    $(".rental").click(function(){
      //body内の最後に<div id="modal-bg"></div>を挿入
     $("body").append('<div id="modal-bg"></div>');
    //画面中央を計算する関数を実行
     modalResize();
    //モーダルウィンドウを表示
-    $("#modal-bg,#modal-main").fadeIn("slow");
+    $("#modal-bg,#rental-modal-main").fadeIn("slow");
    //画面のどこかをクリックしたらモーダルを閉じる
     $("#YES,#NO").click(function(){
-    $("#modal-main,#modal-bg").fadeOut("slow",function(){
+    $("#rental-modal-main,#modal-bg").fadeOut("slow",function(){
     //挿入した<div id="modal-bg"></div>を削除
     $('#modal-bg').remove() ;
     });
     });
- //画面の左上からmodal-mainの横幅・高さを引き、その値を2で割ると画面中央の位置が計算できます
+ //画面の左上からmodal-mainの横幅・高さを引き、その値を2で割ると画面中央の位置
   $(window).resize(modalResize);
     function modalResize(){
       var w = $(window).width();
       var h = $(window).height();
-      var cw = $("#modal-main").outerWidth();
-      var ch = $("#modal-main").outerHeight();
+      var cw = $("#rental-modal-main").outerWidth();
+      var ch = $("#rental-modal-main").outerHeight();
     //取得した値をcssに追加する
-      $("#modal-main").css({
+      $("#rental-modal-main").css({
+        "left": ((w - cw)/2),
+        "top": ((h - ch)/2)
+      });
+      }
+    });
+});
+$(function(){
+ //returnボタンをクリックしたら
+    $(".return").click(function(){
+     //body内の最後に<div id="modal-bg"></div>を挿入
+    $("body").append('<div id="modal-bg"></div>');
+   //画面中央を計算する関数を実行
+    modalResize();
+   //モーダルウィンドウを表示
+    $("#modal-bg,#return-modal-main").fadeIn("slow");
+   //画面のどこかをクリックしたらモーダルを閉じる
+    $("#YES,#NO").click(function(){
+    $("#return-modal-main,#modal-bg").fadeOut("slow",function(){
+    //挿入した<div id="modal-bg"></div>を削除
+    $('#modal-bg').remove() ;
+    });
+    });
+ //画面の左上からmodal-mainの横幅・高さを引き、その値を2で割ると画面中央の位置
+  $(window).resize(modalResize);
+    function modalResize(){
+      var w = $(window).width();
+      var h = $(window).height();
+      var cw = $("#return-modal-main").outerWidth();
+      var ch = $("#return-modal-main").outerHeight();
+    //取得した値をcssに追加する
+      $("#return-modal-main").css({
         "left": ((w - cw)/2),
         "top": ((h - ch)/2)
       });
